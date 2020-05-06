@@ -8,15 +8,31 @@
 #include "Operation.h"
 
 #include <string>
+#include <stack>
+#include <map>
 
 class RegExprParser {
 public:
     explicit RegExprParser() = default;
     explicit RegExprParser(const std::string& pRegExprFile);
 
+    std::string getRPN_expr() const;
 private:
-    std::string reg_expr;
+    void transformToRPN();
+    void beautify();
+    static bool inline isBracket(char c);
 
+    std::string reg_expr;
+    std::string operationSym = "*+|";
+    std::string rpn_reg_expr;
+    std::stack<char> tStack;
+    const std::map<char, int> priority = {
+            {')', 0},
+            {'(', 1},
+            {'|', 2},
+            {'+', 3},
+            {'*', 4}
+    };
 };
 
 
