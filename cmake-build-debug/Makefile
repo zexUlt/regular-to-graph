@@ -124,6 +124,33 @@ regular-to-graph\fast:
 	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\build
 .PHONY : regular-to-graph\fast
 
+RegExprParser.obj: RegExprParser.cpp.obj
+
+.PHONY : RegExprParser.obj
+
+# target to build an object file
+RegExprParser.cpp.obj:
+	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj
+.PHONY : RegExprParser.cpp.obj
+
+RegExprParser.i: RegExprParser.cpp.i
+
+.PHONY : RegExprParser.i
+
+# target to preprocess a source file
+RegExprParser.cpp.i:
+	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.i
+.PHONY : RegExprParser.cpp.i
+
+RegExprParser.s: RegExprParser.cpp.s
+
+.PHONY : RegExprParser.s
+
+# target to generate assembly for a file
+RegExprParser.cpp.s:
+	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.s
+.PHONY : RegExprParser.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -160,6 +187,9 @@ help:
 	@echo ... regular-to-graph
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... RegExprParser.obj
+	@echo ... RegExprParser.i
+	@echo ... RegExprParser.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

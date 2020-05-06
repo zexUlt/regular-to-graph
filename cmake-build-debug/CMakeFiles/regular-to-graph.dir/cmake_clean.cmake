@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/regular-to-graph.dir/RegExprParser.cpp.obj"
   "CMakeFiles/regular-to-graph.dir/main.cpp.obj"
   "regular-to-graph.exe"
   "regular-to-graph.exe.manifest"

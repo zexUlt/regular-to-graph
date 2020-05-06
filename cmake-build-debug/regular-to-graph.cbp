@@ -82,6 +82,15 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="F:/RegularToGraph/regular-to-graph/RegExpr.h">
+			<Option target="regular-to-graph"/>
+		</Unit>
+		<Unit filename="F:/RegularToGraph/regular-to-graph/RegExprParser.cpp">
+			<Option target="regular-to-graph"/>
+		</Unit>
+		<Unit filename="F:/RegularToGraph/regular-to-graph/RegExprParser.h">
+			<Option target="regular-to-graph"/>
+		</Unit>
 		<Unit filename="F:/RegularToGraph/regular-to-graph/main.cpp">
 			<Option target="regular-to-graph"/>
 		</Unit>

@@ -77,17 +77,38 @@ CMakeFiles\regular-to-graph.dir\main.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\regular-to-graph.dir\main.cpp.s /c F:\RegularToGraph\regular-to-graph\main.cpp
 <<
 
+CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj: CMakeFiles\regular-to-graph.dir\flags.make
+CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj: ..\RegExprParser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/regular-to-graph.dir/RegExprParser.cpp.obj"
+	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\HostX86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj /FdCMakeFiles\regular-to-graph.dir\ /FS -c F:\RegularToGraph\regular-to-graph\RegExprParser.cpp
+<<
+
+CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/regular-to-graph.dir/RegExprParser.cpp.i"
+	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\HostX86\x86\cl.exe > CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\RegularToGraph\regular-to-graph\RegExprParser.cpp
+<<
+
+CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/regular-to-graph.dir/RegExprParser.cpp.s"
+	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\HostX86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\regular-to-graph.dir\RegExprParser.cpp.s /c F:\RegularToGraph\regular-to-graph\RegExprParser.cpp
+<<
+
 # Object files for target regular-to-graph
 regular__to__graph_OBJECTS = \
-"CMakeFiles\regular-to-graph.dir\main.cpp.obj"
+"CMakeFiles\regular-to-graph.dir\main.cpp.obj" \
+"CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj"
 
 # External object files for target regular-to-graph
 regular__to__graph_EXTERNAL_OBJECTS =
 
 regular-to-graph.exe: CMakeFiles\regular-to-graph.dir\main.cpp.obj
+regular-to-graph.exe: CMakeFiles\regular-to-graph.dir\RegExprParser.cpp.obj
 regular-to-graph.exe: CMakeFiles\regular-to-graph.dir\build.make
 regular-to-graph.exe: CMakeFiles\regular-to-graph.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable regular-to-graph.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable regular-to-graph.exe"
 	"F:\CLion 2020.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\regular-to-graph.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100177~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100177~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\HostX86\x86\link.exe /nologo @CMakeFiles\regular-to-graph.dir\objects1.rsp @<<
  /out:regular-to-graph.exe /implib:regular-to-graph.lib /pdb:F:\RegularToGraph\regular-to-graph\cmake-build-debug\regular-to-graph.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

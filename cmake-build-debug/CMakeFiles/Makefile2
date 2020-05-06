@@ -75,12 +75,12 @@ clean: CMakeFiles\regular-to-graph.dir\clean
 CMakeFiles\regular-to-graph.dir\all:
 	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\depend
 	$(MAKE) -f CMakeFiles\regular-to-graph.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target regular-to-graph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target regular-to-graph"
 .PHONY : CMakeFiles\regular-to-graph.dir\all
 
 # Build rule for subdir invocation for target.
 CMakeFiles\regular-to-graph.dir\rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles 3
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) CMakeFiles\regular-to-graph.dir\all
 	$(CMAKE_COMMAND) -E cmake_progress_start F:\RegularToGraph\regular-to-graph\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles\regular-to-graph.dir\rule
