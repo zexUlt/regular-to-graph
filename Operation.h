@@ -9,9 +9,9 @@ namespace RegExpr {
 
     enum class Operation {
         Klini,
-        None,
         Conjunction,
-        Disjunction
+        Disjunction,
+        None
     };
 
 }
