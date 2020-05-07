@@ -10,35 +10,76 @@
 RegExprParser::RegExprParser(const std::string &pRegExprFile)
 {
     std::ifstream read(pRegExprFile);
+    std::string alph, expr;
 
-    read >> reg_expr;
+    std::getline(read, alph);
+    read >> expr;
 
     read.close();
 
+    auto pos = alph.find_first_of(' ');
+    int begin_pos = 0;
+    while(pos != std::string::npos){ // Reading all symbols delimited with space
+        alphabet.push_back(alph.substr(begin_pos, pos - begin_pos));
+        begin_pos = pos + 1;
+        pos = alph.find_first_of(' ', pos + 1);
+    }
+    pos = alph.find_last_of(' ');
+    alphabet.push_back(alph.substr(pos + 1)); // Reading last symbol
+
+    for(auto i = 0; i < expr.size(); i++){
+        if(isBracket(std::string(1, expr[i]))){
+            reg_expr.emplace_back(std::string(1, expr[i]));
+        } else if(operationSym.find(expr[i]) != std::string::npos){
+            reg_expr.emplace_back(std::string(1, expr[i]));
+        } else {
+            std::string recognizedLetter(1, expr[i]);
+            while(!ensureAlphabet(recognizedLetter)){
+                recognizedLetter += expr[++i];
+            }
+            reg_expr.emplace_back(recognizedLetter);
+        }
+
+
+    }
+
     beautify();
+
+    for(auto x : reg_expr){
+        std::cout << x;
+    }
+    std::cout << std::endl;
 
     transformToRPN();
 }
 
-bool RegExprParser::isBracket(char c)
+bool RegExprParser::isBracket(const std::string& c)
 {
-    return c == ')' || c == '(';
+    return c == ")" || c == "(";
+}
+
+bool RegExprParser::ensureAlphabet(const std::string& sym)
+{
+    bool isExists = false;
+    for(const auto& letter : alphabet){
+        if(sym == letter)
+            isExists = true;
+    }
+    return isExists;
 }
 
 void RegExprParser::beautify()
 {
-    for(auto it = this->reg_expr.begin(); it != this->reg_expr.end() - 1; it++){
-        auto cond1 = !isBracket(*it) && (this->operationSym.find(*it) == std::string::npos) &&
-                !isBracket(*(it + 1)) && (this->operationSym.find(*(it + 1)) == std::string::npos); // ab -> a+b
-        auto cond2 = (this->operationSym.find(*it) == std::string::npos) && ( *(it + 1) == '('); // a( -> a + (
-        auto cond3 = (*it == ')')  && ((this->operationSym.find(*(it + 1)) == std::string::npos)); // )a -> ) + a
-        auto cond4 = (*it == '*') && (this->operationSym.find(*(it + 1) == std::string::npos)); // *a
-        auto cond5 = (*it == ')' && (*(it + 1) == '(')); // )( -> ) + (
-
+    for(int i = 0; i < this->reg_expr.size() - 1; i++){
+        auto cond1 = ensureAlphabet(reg_expr[i]) && ensureAlphabet(reg_expr[i + 1]); // ab -> a+b
+        auto cond2 = ensureAlphabet(reg_expr[i]) && (reg_expr[i + 1] == "("); // a( -> a + (
+        auto cond3 = (reg_expr[i] == ")") && ensureAlphabet(reg_expr[i + 1]); // )a -> ) + a
+        auto cond4 = (reg_expr[i] == "*") && ensureAlphabet(reg_expr[i + 1]); // *a -> * + a
+        auto cond5 = (reg_expr[i] == ")") && (reg_expr[i + 1] == "("); // )( -> ) + (
 
         if(cond1 || cond2 || cond3 || cond4 || cond5) {
-            this->reg_expr.insert(it + 1, '+');
-            it++;
+            this->reg_expr.insert(reg_expr.begin() + i + 1, "+");
+            i++;
         }
 
     }
@@ -46,44 +87,49 @@ void RegExprParser::beautify()
 
 void RegExprParser::transformToRPN()
 {
-    for(auto it = this->reg_expr.begin(); it != this->reg_expr.end() - 1; it++){
-        if(*it == ')'){ // If next symbol is ')'
-            while(tStack.top() != '('){ // Pop all operations from stack until there is not '('
-                    this->rpn_reg_expr += this->tStack.top();
+    for(auto it = this->reg_expr.begin(); it != this->reg_expr.end(); it++){
+        if(*it == ")"){ // If next symbol is ')'
+            while(tStack.top() != "("){ // Pop all operations from stack until there is not '('
+                    this->rpn_reg_expr.emplace_back(this->tStack.top());
                 this->tStack.pop();
             }
+            this->tStack.pop();
         }
 
-        if(*it == '('){
+        if(ensureAlphabet(*it)) {
+            this->rpn_reg_expr.emplace_back(*it);
+        }
+
+        if(*it == "("){
             this->tStack.push(*it);
         }
 
-        if(this->operationSym.find(*it) == std::string::npos && !isBracket(*it)){
-            this->rpn_reg_expr += *it;
-        } else if(this->tStack.empty() || this->priority.at(this->tStack.top()) < this->priority.at(*it)){
-            this->tStack.push(*it);
-        } else {
-            std::cout << this->priority.at(this->tStack.top()) << std::endl;
-            std::cout << this->priority.at(*it) << std::endl;
-            while(!this->tStack.empty() && (this->priority.at(this->tStack.top()) >= this->priority.at(*it))){
-                if(this->tStack.top() != '(') {
-                    this->rpn_reg_expr += this->tStack.top();
-                    this->tStack.pop();
-                } else break;
-
+        if(this->operationSym.find(*it) != std::string::npos) {
+            if (this->tStack.empty()) {
+                this->tStack.push(*it);
+            } else {
+                if (this->priority.at(this->tStack.top()) < this->priority.at(*it)) {
+                    this->tStack.push(*it);
+                } else {
+                    while ( !this->tStack.empty() && (this->priority.at(this->tStack.top()) >= this->priority.at(*it)) ) {
+                        this->rpn_reg_expr.emplace_back(this->tStack.top());
+                        this->tStack.pop();
+                    }
+                    this->tStack.push(*it);
+                }
             }
         }
     }
 
     while (!this->tStack.empty()){
         if(!isBracket(this->tStack.top())){
-            this->rpn_reg_expr += this->tStack.top();
+            this->rpn_reg_expr.emplace_back(this->tStack.top());
         }
         this->tStack.pop();
     }
 }
 
-std::string RegExprParser::getRPN_expr() const
+std::vector<std::string> RegExprParser::getRPN_expr() const
 {
     return this->rpn_reg_expr;
 }

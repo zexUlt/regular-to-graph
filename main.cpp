@@ -9,9 +9,11 @@ int main(int argc, char* argv[]) {
 //
 //        RegExprParser parser(inFilePath);
 //    }
-    RegExprParser parser("F:\\RegularToGraph\\regular-to-graph\\in.txt");
+    RegExprParser parser(R"(F:\RegularToGraph\regular-to-graph\in.txt)");
 
-    std::cout << parser.getRPN_expr();
+    for(auto x : parser.getRPN_expr()){
+        std::cout << x << " ";
+    }
     return 0;
 }
 

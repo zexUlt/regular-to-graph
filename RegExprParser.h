@@ -10,28 +10,33 @@
 #include <string>
 #include <stack>
 #include <map>
+#include <vector>
 
 class RegExprParser {
 public:
     explicit RegExprParser() = default;
     explicit RegExprParser(const std::string& pRegExprFile);
 
-    std::string getRPN_expr() const;
+    std::vector<std::string> getRPN_expr() const;
+
+    std::vector<std::string> alphabet;
 private:
     void transformToRPN();
     void beautify();
-    static bool inline isBracket(char c);
+    static bool inline isBracket(const std::string& sym);
+    bool ensureAlphabet(const std::string& sym);
 
-    std::string reg_expr;
+
+    std::vector<std::string> reg_expr;
     std::string operationSym = "*+|";
-    std::string rpn_reg_expr;
-    std::stack<char> tStack;
-    const std::map<char, int> priority = {
-            {')', 0},
-            {'(', 1},
-            {'|', 2},
-            {'+', 3},
-            {'*', 4}
+    std::vector<std::string> rpn_reg_expr;
+    std::stack<std::string> tStack;
+    const std::map<std::string , int> priority = {
+            {")", 0},
+            {"(", 1},
+            {"|", 2},
+            {"+", 3},
+            {"*", 4}
     };
 };
 
