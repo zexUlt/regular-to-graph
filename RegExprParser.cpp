@@ -17,7 +17,7 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
 
     read.close();
 
-    auto pos = alph.find_first_of(' ');
+    unsigned pos = alph.find_first_of(' ');
     int begin_pos = 0;
     while(pos != std::string::npos){ // Reading all symbols delimited with space
         alphabet.push_back(alph.substr(begin_pos, pos - begin_pos));
@@ -45,7 +45,7 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
 
     beautify();
 
-    for(auto x : reg_expr){
+    for(const auto& x : reg_expr){
         std::cout << x;
     }
     std::cout << std::endl;

@@ -1,7 +1,7 @@
 #include "Graph.h"
 
-void Graph:: disjuction(string first,string second){
-    Graph::edge tmp;
+void Graph:: disjuction(const string& first, const string& second){
+    Graph::Edge tmp;
     pair<int,int> first_last;
     if(first != "None" && second!= "None"){
         tmp.first=num[0].first;
@@ -29,7 +29,7 @@ void Graph:: disjuction(string first,string second){
         num[0].second=-1;
     }
     else {
-        for (int i = 0; i < ans.size(); i++) {
+        for(int i = 0; i < ans.size(); i++) {
             if (ans[i].first == num[num.size()-1].first) {
                 ans[i].first = num[num.size()-2].first;
             }
@@ -49,8 +49,8 @@ void Graph:: disjuction(string first,string second){
 
 
 
-void Graph:: klini(edge first_last){ //Клини
-    Graph::edge tmp;
+void Graph::klini(const Edge& first_last){ //Клини
+    Graph::Edge tmp;
 
     if(first_last.mark != "None"){
         tmp.first=first_last.first;
@@ -62,8 +62,8 @@ void Graph:: klini(edge first_last){ //Клини
 }
 
 
-void Graph::conjunction(string first,string second){  //умнож
-    Graph::edge tmp;
+void Graph::conjunction(const string& first, const string& second){  //умнож
+    Graph::Edge tmp;
     pair<int,int> first_last;
     if(first != "None" && second != "None") {
         if(num[0].first !=num[0].second) {
@@ -124,15 +124,13 @@ void Graph::conjunction(string first,string second){  //умнож
 void Graph::construction(vector<string> path){
     string mark_1="None",mark_2="None";
     pair<int,int> first_last;
-    edge tmp;
+    Edge tmp;
     first_last.first=-1;
     first_last.second=-1;
     num.push_back(first_last);
     num.push_back(first_last);
     num_states=0;
     for(int i=0;i<path.size();i++){
-
-
         if(path[i] == "*"){                         //Клини
             if(mark_1!="None" && mark_2 == "None"){
                 tmp.mark=mark_1;
