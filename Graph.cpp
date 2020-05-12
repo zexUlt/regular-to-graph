@@ -3,6 +3,7 @@
 void Graph:: disjuction(const string& first, const string& second){
     Graph::Edge tmp;
     pair<int,int> first_last;
+    int flag_1=0,flag_2=0,flag_3=0,flag_4=0;
     if(first != "None" && second!= "None"){
         tmp.first=num_states;
         tmp.second=num_states+1;
@@ -19,65 +20,148 @@ void Graph:: disjuction(const string& first, const string& second){
 
     }
     else if(first != "None" && second== "None"){
-        tmp.first = num[num.size() - 1].first;
-        for (int i = 0; i < ans.size(); i++) {
-            if (ans[i].first == num[num.size() - 1].first)
-                ans[i].first = num_states;
-            if (ans[i].second == num[num.size() - 1].first)
-                ans[i].second = num_states;
+        for(int i=0;i<ans.size();i++){
+            if(ans[i].first ==num[num.size()-1].first && ans[i].second==num[num.size()-1].first)
+                flag_1=1;
+            if(ans[i].first ==num[num.size()-1].second && ans[i].second==num[num.size()-1].second)
+                flag_2=1;
         }
-        tmp.second = num_states;
-        tmp.mark = "E";
-        ans.push_back(tmp);
-        num_states++;
+        if(flag_1 || flag_2){
+            if(flag_1 == 1 && flag_2 != 1){
+                tmp.first=num_states;
+                tmp.second=num[num.size()-1].first;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                num[num.size()-1].first=tmp.first;
+                tmp.second=num[num.size()-1].second;
+                tmp.mark=first;
+                num_states++;
+                ans.push_back(tmp);
+            }
+            else if(flag_1 != 1 && flag_2 == 1){
+                tmp.first=num[num.size()-1].first;
+                tmp.second=num_states;
+                tmp.mark=first;
+                ans.push_back(tmp);
+                tmp.first=num[num.size()-1].second;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                num[num.size()-1].second=tmp.second;
+                num_states++;
+            }
+            else{
+                tmp.first=num_states;
+                tmp.second=num[num.size()-1].first;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                tmp.second=num_states+1;
+                tmp.mark=first;
+                ans.push_back(tmp);
+                tmp.first=num[num.size()-1].second;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                num[num.size()-1].first=num_states;
+                num[num.size()-1].second=num_states+1;
+                num_states+=2;
+            }
 
-        tmp.second = num_states;
-        tmp.mark = first;
-        ans.push_back(tmp);
-
-        if(num[num.size()-1].first == num[num.size()-1].second) {
-            tmp.first = num_states - 1;
-            tmp.mark = "E";
-            ans.push_back(tmp);
-            num_states++;
-            num[num.size() - 1].second = tmp.second;
         }
         else{
-            for(int i=0;i<ans.size();i++)
-                if(ans[i].first == num[num.size()-1].second)
-                    ans[i].first=tmp.second;
+            tmp.first=num[num.size()-1].first;
+            tmp.second=num[num.size()-1].second;
+            tmp.mark=first;
+            ans.push_back(tmp);
         }
+
+
     }
     else {
-
-        tmp.first = num[num.size() - 2].first;
-        for (int i = 0; i < ans.size(); i++) {
-            if (ans[i].first == num[num.size() - 2].first)
-                ans[i].first = num_states;
+        for(int i=0;i<ans.size();i++){
+            if(ans[i].first ==num[num.size()-2].first && ans[i].second==num[num.size()-2].first)
+                flag_1=1;
+            if(ans[i].first ==num[num.size()-1].first && ans[i].second==num[num.size()-1].first)
+                flag_2=1;
+            if(ans[i].first ==num[num.size()-2].second && ans[i].second==num[num.size()-2].second)
+                flag_3=1;
+            if(ans[i].first ==num[num.size()-1].second && ans[i].second==num[num.size()-1].second)
+                flag_4=1;
         }
-        tmp.second = num_states;
-        tmp.mark = "E";
-        ans.push_back(tmp);
+        if(flag_1 || flag_2 ||flag_3 || flag_4){
+            if(flag_1 == 1 && flag_2 !=1){
+                tmp.first=num[num.size()-1].first;
+                tmp.second=num[num.size()-2].first;
+                tmp.mark="E";
+                ans.push_back(tmp);
+            }
+            else if(flag_1 != 1 && flag_2 == 1){
+                tmp.first=num[num.size()-2].first;
+                tmp.second=num[num.size()-1].first;
+                tmp.mark="E";
+                ans.push_back(tmp);
+            }
+            else if(flag_1 == 1 && flag_2 ==1 ){
+                tmp.first = num_states;
+                tmp.second=num[num.size()-2].first;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                num[num.size()-2].first=tmp.first;
+                tmp.second=num[num.size()-1].first;
+                tmp.mark="E";
+                num_states++;
+                ans.push_back(tmp);
+            }
+            else{
+                for(int i=0;i<ans.size();i++)
+                    if(ans[i].first == num[num.size()-1].first)
+                        ans[i].first=num[num.size()-2].first;
+            }
 
-        tmp.second = num[num.size() - 1].first;
-        tmp.mark = "E";
-        ans.push_back(tmp);
+            if(flag_3 == 1 && flag_4 != 1){
+                tmp.first=num[num.size()-2].second;
+                tmp.second=num[num.size()-1].second;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                num[num.size()-2].second=tmp.second;
+            }
+            else if(flag_3 != 1 && flag_4 == 1){
+                tmp.first=num[num.size()-1].second;
+                tmp.second=num[num.size()-2].second;
+                tmp.mark="E";
+                ans.push_back(tmp);
 
-        tmp.first = num[num.size()-2].second;
-        tmp.second = num_states + 1;
-        tmp.mark = "E";
-        ans.push_back(tmp);
-        num_states += 2;
-
-
-        tmp.first=tmp.second;
-        tmp.second = num[num.size() - 1].second;
-        tmp.mark = "E";
-        ans.push_back(tmp);
-        num[num.size() - 2].second = tmp.second;
-        num.pop_back();
+            }
+            else if(flag_3 == 1 && flag_4 == 1){
+                tmp.first=num[num.size()-2].second;
+                tmp.second=num_states;
+                tmp.mark="E";
+                ans.push_back(tmp);
+                tmp.first=num[num.size()-1].second;
+                ans.push_back(tmp);
+                num[num.size()-2].second=tmp.second;
+                num_states++;
+            }
+            else{
+                for(int i=0;i<ans.size();i++)
+                    if(ans[i].second == num[num.size()-1].second)
+                        ans[i].second=num[num.size()-2].second;
+            }
+            num.pop_back();
+        }
+        else{
+            for(int i=0;i<ans.size();i++){
+                if(ans[i].first == num[num.size()-1].first)
+                    ans[i].first=num[num.size()-2].first;
+                if(ans[i].second == num[num.size()-1].second)
+                    ans[i].second=num[num.size()-2].second;
+            }
+            num.pop_back();
+        }
     }
 }
+
+
+
+
 
 
 
