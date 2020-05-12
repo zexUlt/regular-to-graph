@@ -20,7 +20,7 @@ private:
     void klini(const Edge& target);
     void conjunction(const string& _first, const string& _second);
     void disjuction(const string&, const string&);
-    int num_states;//,first_1,first_2,first_3,last_1,last_2,last_3,first_4,last_4;
+    int num_states;
     vector<pair<int,int>> num;
 
 };
