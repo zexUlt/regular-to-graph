@@ -13,7 +13,13 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
     std::string alph, expr;
 
     std::getline(read, alph);
-    read >> expr;
+    std::getline(read, expr);
+
+    int space_pos = expr.find(' ');
+    while(space_pos != std::string::npos){
+        expr.erase(space_pos, 1);
+        space_pos = expr.find(' ');
+    }
 
     read.close();
 
