@@ -28,14 +28,15 @@ private:
 
 
     std::vector<std::string> reg_expr;
-    std::string operationSym = "*+|";
+    std::string operationSym = "*+|.";
     std::vector<std::string> rpn_reg_expr;
     std::stack<std::string> tStack;
     const std::map<std::string , int> priority = {
             {")", 0},
             {"(", 1},
             {"|", 2},
-            {"+", 3},
+            {".", 3},
+            {"+", 4},
             {"*", 4}
     };
 };

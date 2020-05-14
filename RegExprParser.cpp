@@ -71,14 +71,15 @@ bool RegExprParser::ensureAlphabet(const std::string& sym)
 void RegExprParser::beautify()
 {
     for(int i = 0; i < this->reg_expr.size() - 1; i++){
-        auto cond1 = ensureAlphabet(reg_expr[i]) && ensureAlphabet(reg_expr[i + 1]); // ab -> a+b
-        auto cond2 = ensureAlphabet(reg_expr[i]) && (reg_expr[i + 1] == "("); // a( -> a + (
-        auto cond3 = (reg_expr[i] == ")") && ensureAlphabet(reg_expr[i + 1]); // )a -> ) + a
-        auto cond4 = (reg_expr[i] == "*") && ensureAlphabet(reg_expr[i + 1]); // *a -> * + a
-        auto cond5 = (reg_expr[i] == ")") && (reg_expr[i + 1] == "("); // )( -> ) + (
+        auto cond1 = ensureAlphabet(reg_expr[i]) && ensureAlphabet(reg_expr[i + 1]); // ab -> a.b
+        auto cond2 = ensureAlphabet(reg_expr[i]) && (reg_expr[i + 1] == "("); // a( -> a . (
+        auto cond3 = (reg_expr[i] == ")") && ensureAlphabet(reg_expr[i + 1]); // )a -> ) . a
+        auto cond4 = (reg_expr[i] == "*") && ensureAlphabet(reg_expr[i + 1]); // *a -> * . a
+        auto cond5 = (reg_expr[i] == "+") && ensureAlphabet(reg_expr[i + 1]); // +a -> +.a
+        auto cond6 = (reg_expr[i] == ")") && (reg_expr[i + 1] == "("); // )( -> ) . (
 
-        if(cond1 || cond2 || cond3 || cond4 || cond5) {
-            this->reg_expr.insert(reg_expr.begin() + i + 1, "+");
+        if(cond1 || cond2 || cond3 || cond4 || cond5 || cond6) {
+            this->reg_expr.insert(reg_expr.begin() + i + 1, ".");
             i++;
         }
 
