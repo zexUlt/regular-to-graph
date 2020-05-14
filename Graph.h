@@ -1,26 +1,29 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 
 class Graph {
 public:
-    class Edge{
-    public:
+    struct Edge{
         int first;
         int second;
         string mark;
     };
+    void construction(vector<string>);
 
-    void construction(vector<string> regexpr);
-    vector<Edge> ans;
+    vector <Edge> ans;
 
 private:
-    void klini(const Edge& target);
-    void conjunction(const string& _first, const string& _second);
-    void disjuction(const string&, const string&);
+    void klini(Edge);
+    void conjunction(string,string);
+    void disjuction(string,string);
+    void print(vector<Edge>);
+    void dfa(vector<Edge>);
     int num_states;
+    void push_edge(int,int,string);
     vector<pair<int,int>> num;
 
 };
