@@ -8,176 +8,107 @@ void Graph::push_edge(int first, int second, string mark) {
     ans.push_back(tmp);
 }
 
-void Graph:: disjuction(string first,string second){
+void Graph:: disjuction(){
     pair<int,int> first_last;
     int flag_1=0,flag_2=0,flag_3=0,flag_4=0;
-    if(first != "None" && second!= "None"){
-        push_edge(num_states,num_states+1,first);
-        push_edge(num_states,num_states+1,second);
-        first_last.first=num_states;
-        first_last.second=num_states+1;
-        num_states+=2;
-        num.push_back(first_last);
+    for(int i=0;i<ans.size();i++){
+        if(ans[i].first ==num[num.size()-2].first && ans[i].second==num[num.size()-2].first)
+            flag_1=1;
+        if(ans[i].first ==num[num.size()-1].first && ans[i].second==num[num.size()-1].first)
+            flag_2=1;
+        if(ans[i].first ==num[num.size()-2].second && ans[i].second==num[num.size()-2].second)
+            flag_3=1;
+        if(ans[i].first ==num[num.size()-1].second && ans[i].second==num[num.size()-1].second)
+            flag_4=1;
     }
-    else if(first != "None" && second== "None"){
-        for(int i=0;i<ans.size();i++){
-            if(ans[i].first ==num[num.size()-1].first && ans[i].second==num[num.size()-1].first)
-                flag_1=1;
-            if(ans[i].first ==num[num.size()-1].second && ans[i].second==num[num.size()-1].second)
-                flag_2=1;
+    if(flag_1 || flag_2 ||flag_3 || flag_4){
+        if(flag_1 == 1 && flag_2 !=1){
+            push_edge(num[num.size()-1].first,num[num.size()-2].first,"E");
         }
-        if(flag_1 || flag_2){
-            if(flag_1 == 1 && flag_2 != 1){
-                push_edge(num_states,num[num.size()-1].first,"E");
-                num[num.size()-1].first=num_states;
-                push_edge(num_states,num[num.size()-1].second,first);
-                num_states++;
-            }
-            else if(flag_1 != 1 && flag_2 == 1){
-                push_edge(num[num.size()-1].first,num_states,first);
-                push_edge(num[num.size()-1].second,num_states,"E");
-                num[num.size()-1].second=num_states;
-                num_states++;
-            }
-            else{
-                push_edge(num_states,num[num.size()-1].first,"E");
-                push_edge(num_states,num_states+1,first);
-                push_edge(num[num.size()-1].second,num_states+1,"E");
-                num[num.size()-1].first=num_states;
-                num[num.size()-1].second=num_states+1;
-                num_states+=2;
-            }
-
+        else if(flag_1 != 1 && flag_2 == 1){
+            push_edge(num[num.size()-2].first,num[num.size()-1].first,"E");
+        }
+        else if(flag_1 == 1 && flag_2 ==1 ){
+            push_edge(num_states,num[num.size()-2].first,"E");
+            num[num.size()-2].first=num_states;
+            push_edge(num_states,num[num.size()-1].first,"E");
+            num_states++;
         }
         else{
-            push_edge(num[num.size()-1].first,num[num.size()-1].second,first);
-        }
-    }
-    else {
-        for(int i=0;i<ans.size();i++){
-            if(ans[i].first ==num[num.size()-2].first && ans[i].second==num[num.size()-2].first)
-                flag_1=1;
-            if(ans[i].first ==num[num.size()-1].first && ans[i].second==num[num.size()-1].first)
-                flag_2=1;
-            if(ans[i].first ==num[num.size()-2].second && ans[i].second==num[num.size()-2].second)
-                flag_3=1;
-            if(ans[i].first ==num[num.size()-1].second && ans[i].second==num[num.size()-1].second)
-                flag_4=1;
-        }
-        if(flag_1 || flag_2 ||flag_3 || flag_4){
-            if(flag_1 == 1 && flag_2 !=1){
-                push_edge(num[num.size()-1].first,num[num.size()-2].first,"E");
-            }
-            else if(flag_1 != 1 && flag_2 == 1){
-                push_edge(num[num.size()-2].first,num[num.size()-1].first,"E");
-            }
-            else if(flag_1 == 1 && flag_2 ==1 ){
-                push_edge(num_states,num[num.size()-2].first,"E");
-                num[num.size()-2].first=num_states;
-                push_edge(num_states,num[num.size()-1].first,"E");
-                num_states++;
-            }
-            else{
-                for(int i=0;i<ans.size();i++)
-                    if(ans[i].first == num[num.size()-1].first)
-                        ans[i].first=num[num.size()-2].first;
-            }
-            if(flag_3 == 1 && flag_4 != 1){
-                push_edge(num[num.size()-2].second,num[num.size()-1].second,"E");
-                num[num.size()-2].second=num[num.size()-1].second;
-            }
-            else if(flag_3 != 1 && flag_4 == 1){
-                push_edge(num[num.size()-1].second,num[num.size()-2].second,"E");
-            }
-            else if(flag_3 == 1 && flag_4 == 1){
-                push_edge(num[num.size()-2].second,num_states,"E");
-                push_edge(num[num.size()-1].second,num_states,"E");
-                num[num.size()-2].second=num_states;
-                num_states++;
-            }
-            else{
-                for(int i=0;i<ans.size();i++)
-                    if(ans[i].second == num[num.size()-1].second)
-                        ans[i].second=num[num.size()-2].second;
-            }
-            num.pop_back();
-        }
-        else{
-            for(int i=0;i<ans.size();i++){
+            for(int i=0;i<ans.size();i++)
                 if(ans[i].first == num[num.size()-1].first)
                     ans[i].first=num[num.size()-2].first;
-                if(ans[i].second == num[num.size()-1].second)
-                    ans[i].second=num[num.size()-2].second;
-            }
-            num.pop_back();
         }
-    }
-}
-void Graph:: klini(Edge test){ //Клини
-    pair<int,int> first_last;
-    if(test.mark != "None"){
-        push_edge(num_states,num_states,test.mark);
-        num_states++;
-        first_last.first=num_states;
-        first_last.second=num_states;
-        num.push_back(first_last);
-    }
-    else{
-        push_edge(test.second,test.first,"E");
-    }
-}
-
-
-void Graph::conjunction(string first,string second){  //умнож
-    pair<int,int> first_last;
-    int flag=0;
-    if(first != "None" && second != "None") {
-        push_edge(num_states,num_states+1,first);
-        num_states++;
-        first_last.first = num_states;
-        push_edge(num_states,num_states+1,second);
-        first_last.second = num_states+1;
-        num_states += 2;
-        num.push_back(first_last);
-    }
-
-    else if(first != "None" && second == "None"){
-        if(num[num.size()-1].first == num[num.size()-1].second){
-            for(int i=0;i<ans.size();i++){
-                if(ans[i].first == num[num.size()-1].first)
-                    ans[i].first=num_states;
-                if(ans[i].second == num[num.size()-1].first)
-                    ans[i].second=num_states;
-            }
-            push_edge(num[num.size()-1].first,num_states,first);
-            num[num.size()-1].second=num_states;
+        if(flag_3 == 1 && flag_4 != 1){
+            push_edge(num[num.size()-2].second,num[num.size()-1].second,"E");
+            num[num.size()-2].second=num[num.size()-1].second;
         }
-        else {
-            push_edge(num[num.size() - 1].second,num_states,first);
-            num[num.size()-1].second=num_states;
+        else if(flag_3 != 1 && flag_4 == 1){
+            push_edge(num[num.size()-1].second,num[num.size()-2].second,"E");
         }
-        num_states++;
-    }
-
-    else{
-        for(int i=0;i<ans.size();i++)
-            if(ans[i].first == num[num.size()-2].second && ans[i].second == num[num.size()-2].second)
-                flag=1;
-        if(flag) {
-            push_edge(num[num.size() - 2].second,num[num.size() - 1].first,"E");
-            num[num.size() - 2].second = num[num.size() - 1].second;
-            flag=0;
+        else if(flag_3 == 1 && flag_4 == 1){
+            push_edge(num[num.size()-2].second,num_states,"E");
+            push_edge(num[num.size()-1].second,num_states,"E");
+            num[num.size()-2].second=num_states;
+            num_states++;
         }
         else{
-            for(int i=0;i<ans.size();i++) {
-                if (ans[i].first == num[num.size() - 2].second)
-                    ans[i].first = num[num.size() - 1].first;
-                if (ans[i].second == num[num.size() - 2].second)
-                    ans[i].second = num[num.size() - 1].first;
-            }
+            for(int i=0;i<ans.size();i++)
+                if(ans[i].second == num[num.size()-1].second)
+                    ans[i].second=num[num.size()-2].second;
         }
         num.pop_back();
     }
+    else{
+        for(int i=0;i<ans.size();i++){
+            if(ans[i].first == num[num.size()-1].first)
+                ans[i].first=num[num.size()-2].first;
+            if(ans[i].second == num[num.size()-1].second)
+                ans[i].second=num[num.size()-2].second;
+        }
+        num.pop_back();
+    }
+}
+
+void Graph::positive_iter(Edge test) {
+    push_edge(test.second,test.first,"E");
+}
+
+
+
+void Graph:: klini(){ //Клини
+    if(num[num.size()-1].first == num[num.size()-1].second-1) {
+        ans[ans.size() - 1].first = ans[ans.size() - 1].second;
+        num[num.size()-1].first=num[num.size()-1].second;
+    }
+    else
+        push_edge(num[num.size()-1].second,num[num.size()-1].first,"E");
+}
+
+
+void Graph::conjunction(){  //умнож
+
+    int flag=0;
+
+    for(int i=0;i<ans.size();i++)
+        if(ans[i].first == num[num.size()-2].second && ans[i].second == num[num.size()-2].second)
+            flag=1;
+    if(flag) {
+        push_edge(num[num.size() - 2].second,num[num.size() - 1].first,"E");
+        num[num.size() - 2].second = num[num.size() - 1].second;
+        flag=0;
+    }
+    else{
+        for(int i=0;i<ans.size();i++) {
+            if (ans[i].first == num[num.size() - 2].second)
+                ans[i].first = num[num.size() - 1].first;
+            if (ans[i].second == num[num.size() - 2].second)
+                ans[i].second = num[num.size() - 1].first;
+        }
+        num[num.size()-2].second=num[num.size()-1].second;
+    }
+    num.pop_back();
+
 }
 
 
@@ -185,48 +116,38 @@ void Graph::conjunction(string first,string second){  //умнож
 
 void Graph::construction(vector<string> path){
     string mark_1="None",mark_2="None";
-    // pair<int,int> first_last;
+    pair<int,int> first_last;
     Edge tmp;
     num_states=0;
     for(int i=0;i<path.size();i++){
-        if(path[i] == "*"){                         //Клини
-            if(mark_1!="None" && mark_2 == "None"){
-                tmp.mark=mark_1;
-                klini(tmp);
-                mark_1="None";
+        if(path[i] == "*"){                        //Клини
+            klini();
+        }
+        else if(path[i] == "+"){
+            if(num[num.size()-1].first == num[num.size()-1].second-1) {
+                push_edge(num_states, num_states + 1, ans[ans.size() - 1].mark);
+                first_last.first=num_states;
+                first_last.second=num_states+1;
+                num.push_back(first_last);
+                num_states+=2;
+                klini();
+                conjunction();
             }
-            else if(mark_2 != "None"){
-                tmp.mark=mark_2;
-                klini(tmp);
-                mark_2="None";
-            }
-            else{
-                tmp.mark="None";
-                tmp.first=num[num.size()-1].first;
-                tmp.second=num[num.size()-1].second;
-                klini(tmp);
-            }
+            else
+                klini();
         }
         else if(path[i] == "|"){
-            disjuction(mark_1,mark_2);
-            mark_1="None";
-            mark_2="None";
+            disjuction();
         }
         else if(path[i] == "."){
-            conjunction(mark_1, mark_2);
-            mark_1 = "None";
-            mark_2 = "None";
-
+            conjunction();
         }
         else{
-            if(mark_1 == "None") {
-                mark_1 = path[i];
-            }
-
-            else {
-                mark_2 = path[i];
-            }
-
+            push_edge(num_states,num_states+1,path[i]);
+            first_last.first=num_states;
+            first_last.second=num_states+1;
+            num.push_back(first_last);
+            num_states+=2;
         }
     }
     for(int i=0;i<ans.size();i++){
