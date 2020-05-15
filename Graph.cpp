@@ -70,12 +70,6 @@ void Graph:: disjuction(){
     }
 }
 
-void Graph::positive_iter(Edge test) {
-    push_edge(test.second,test.first,"E");
-}
-
-
-
 void Graph:: klini(){ //Клини
     if(num[num.size()-1].first == num[num.size()-1].second-1) {
         ans[ans.size() - 1].first = ans[ans.size() - 1].second;
