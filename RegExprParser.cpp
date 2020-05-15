@@ -7,8 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-RegExprParser::RegExprParser(const std::string &pRegExprFile)
-{
+RegExprParser::RegExprParser(const std::string &pRegExprFile) {
     std::ifstream read(pRegExprFile);
     std::string alph, expr;
 
@@ -16,7 +15,7 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
     std::getline(read, expr);
 
     int space_pos = expr.find(' ');
-    while(space_pos != std::string::npos){
+    while (space_pos != std::string::npos) {
         expr.erase(space_pos, 1);
         space_pos = expr.find(' ');
     }
@@ -25,7 +24,7 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
 
     unsigned pos = alph.find_first_of(' ');
     int begin_pos = 0;
-    while(pos != std::string::npos){ // Reading all symbols delimited with space
+    while (pos != std::string::npos) { // Reading all symbols delimited with space
         alphabet.push_back(alph.substr(begin_pos, pos - begin_pos));
         begin_pos = pos + 1;
         pos = alph.find_first_of(' ', pos + 1);
@@ -33,30 +32,32 @@ RegExprParser::RegExprParser(const std::string &pRegExprFile)
     pos = alph.find_last_of(' ');
     alphabet.push_back(alph.substr(pos + 1)); // Reading last symbol
 
-    for(auto i = 0; i < expr.size(); i++){
-        if(isBracket(std::string(1, expr[i]))){
-            reg_expr.emplace_back(std::string(1, expr[i]));
-        } else if(operationSym.find(expr[i]) != std::string::npos){
-            reg_expr.emplace_back(std::string(1, expr[i]));
-        } else {
-            std::string recognizedLetter(1, expr[i]);
-            while(!ensureAlphabet(recognizedLetter)){
-                recognizedLetter += expr[++i];
+    if (!expr.empty()){
+        for (auto i = 0; i < expr.size(); i++) {
+            if (isBracket(std::string(1, expr[i]))) {
+                reg_expr.emplace_back(std::string(1, expr[i]));
+            } else if (operationSym.find(expr[i]) != std::string::npos) {
+                reg_expr.emplace_back(std::string(1, expr[i]));
+            } else {
+                std::string recognizedLetter(1, expr[i]);
+                while (!ensureAlphabet(recognizedLetter)) {
+                    recognizedLetter += expr[++i];
+                }
+                reg_expr.emplace_back(recognizedLetter);
             }
-            reg_expr.emplace_back(recognizedLetter);
         }
 
+        beautify();
 
+        for (const auto &x : reg_expr) {
+            std::cout << x;
+        }
+        std::cout << std::endl;
+
+        transformToRPN();
+    } else {
+        rpn_reg_expr = std::vector<std::string>();
     }
-
-    beautify();
-
-    for(const auto& x : reg_expr){
-        std::cout << x;
-    }
-    std::cout << std::endl;
-
-    transformToRPN();
 }
 
 bool RegExprParser::isBracket(const std::string& c)
