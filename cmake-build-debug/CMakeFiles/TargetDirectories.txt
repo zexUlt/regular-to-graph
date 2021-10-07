@@ -1,3 +1,0 @@
-F:/RegularToGraph/regular-to-graph/cmake-build-debug/CMakeFiles/regular-to-graph.dir
-F:/RegularToGraph/regular-to-graph/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/RegularToGraph/regular-to-graph/cmake-build-debug/CMakeFiles/rebuild_cache.dir
